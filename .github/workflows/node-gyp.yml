@@ -33,6 +33,8 @@ jobs:
       - run: git add binaries
       - run: git checkout -b temp_${{ github.sha }} # create it if it doesn't exist
         continue-on-error: true
+      - run: git push origin temp_${{ github.sha }}
+        continue-on-error: true
       - run: git checkout temp_${{ github.sha }} # checkout if it already existed
       - run: git branch -u origin/temp_${{ github.sha }} temp_${{ github.sha }}
       - name: Commit
