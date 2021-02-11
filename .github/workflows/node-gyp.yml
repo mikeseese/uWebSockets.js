@@ -29,5 +29,6 @@ jobs:
           git checkout master docs/index.d.ts && mv docs/index.d.ts .
           git config --global user.email "seesemichaelj@gmail.com"
           git config --global user.name "Mike Seese"
+          git add *.node
           git commit -a -m "[GitHub Actions] Updated ${{ matrix.os }} NodeJS ${{ matrix.node }} binaries" || true
           git push "https://seesemichaelj:${{ secrets.SECRET }}@github.com/seesemichaelj/uWebSockets.js" binaries
