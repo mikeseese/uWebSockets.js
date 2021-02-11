@@ -16,23 +16,8 @@
  */
 
 module.exports = (() => {
-	let platform;
-	switch (process.platform) {
-		case "win32": {
-			platform = "win";
-			break;
-		}
-		case "linux": {
-			platform = "linux";
-			break;
-		}
-		case "darwin": {
-			platform = "mac";
-			break;
-		}
-	}
 	try {
-		const uWS = require('../binaries/uws_' + process.platform + '_' + process.versions.modules + '.node');
+		const uWS = require('../binaries/uws_' + process.platform + '_' + process.arch + '_' + process.versions.modules + '.node');
 		if (process.env.EXPERIMENTAL_FASTCALL) {
 			process.nextTick = (f, ...args) => {
 				Promise.resolve().then(() => {
