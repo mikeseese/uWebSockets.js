@@ -20,14 +20,21 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: yarn
-      - name: Upload Release Asset
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: cp -f ./build/Release/*.node ./binaries
+      - name: Configure Git
+        run: |
+          git config --global user.email "seesemichaelj@gmail.com"
+          git config --global user.name "Mike Seese"
+      - run: git add binaries
+      - run: git checkout -b temp_${{ github.sha }} # create it if it doesn't exist
+        continue-on-error: true
+      - run: git checkout temp_${{ github.sha }} # checkout if it already existed
+      - name: Commit
+        run: git commit -m "[GitHub Actions] Updated ${{ matrix.os }} NodeJS ${{ matrix.node }} binaries" || true
+      - name: Push
+        uses: nick-invision/retry@v2
         with:
-          release_name: Release ${{ github.ref }}
-          tag_name: ${{ github.ref }}
-          draft: true
-          prerelease: false
-          files: ./build/Release/*.node
+            timeout_minutes: 1
+            max_attempts: 20
+            retry_wait_seconds: 5
+            command: git pull && git push "https://seesemichaelj:${{ secrets.SECRET }}@github.com/seesemichaelj/uWebSockets.js" temp_${{ github.sha }}
