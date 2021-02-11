@@ -2,7 +2,8 @@
   "name": "uWebSockets.js",
   "version": "18.15.0",
   "description": "Simple, secure, & standards compliant web server for the most demanding of applications.",
-  "main": "index.js",
+  "main": "src/uws.js",
+  "types": "docs/index.d.ts",
   "directories": {
     "doc": "docs",
     "example": "examples",

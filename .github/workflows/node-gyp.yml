@@ -20,17 +20,14 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: yarn
-      - run: cp ./build/Release/*.node .
+      - run: mkdir -p ./binaries
+      - run: cp ./build/Release/*.node ./binaries
       - name: Configure Git
         run: |
-          git status
-          git pull origin binaries
-          git rev-parse master > source_commit
-          git checkout master docs/index.d.ts && mv docs/index.d.ts .
           git config --global user.email "seesemichaelj@gmail.com"
           git config --global user.name "Mike Seese"
-      - run: git add *.node
+      - run: git add binaries
       - name: Commit
-        run: git commit -a -m "[GitHub Actions] Updated ${{ matrix.os }} NodeJS ${{ matrix.node }} binaries" || true
+        run: git commit -m "[GitHub Actions] Updated ${{ matrix.os }} NodeJS ${{ matrix.node }} binaries" || true
       - name: Push
         run: git push "https://seesemichaelj:${{ secrets.SECRET }}@github.com/seesemichaelj/uWebSockets.js" binaries
