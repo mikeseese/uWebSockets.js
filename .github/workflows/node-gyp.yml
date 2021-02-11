@@ -4,11 +4,9 @@ on:
   push:
     branches: [ master ]
 
-# Prevent recursive builds
-if: ${{ !startsWith(github.event.head_commit.message, '[Github Actions]') }}
-
 jobs:
   build:
+    if: ${{ !startsWith(github.event.head_commit.message, '[Github Actions]') }} # Prevent recursive builds
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
