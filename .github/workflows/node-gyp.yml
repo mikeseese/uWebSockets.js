@@ -36,6 +36,7 @@ jobs:
       - run: git push origin temp_${{ github.sha }}
         continue-on-error: true
       - run: git checkout temp_${{ github.sha }} # checkout if it already existed
+      - run: git fetch
       - run: git branch -u origin/temp_${{ github.sha }} temp_${{ github.sha }}
       - name: Commit
         run: git commit -m "[GitHub Actions] Updated ${{ matrix.os }} NodeJS ${{ matrix.node }} binaries" || true
