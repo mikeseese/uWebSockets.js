@@ -29,10 +29,12 @@ jobs:
         run: |
           git config --global user.email "seesemichaelj@gmail.com"
           git config --global user.name "Mike Seese"
+          git config pull.rebase true
       - run: git add binaries
       - run: git checkout -b temp_${{ github.sha }} # create it if it doesn't exist
         continue-on-error: true
       - run: git checkout temp_${{ github.sha }} # checkout if it already existed
+      - run: git branch -u origin/temp_${{ github.sha }} temp_${{ github.sha }}
       - name: Commit
         run: git commit -m "[GitHub Actions] Updated ${{ matrix.os }} NodeJS ${{ matrix.node }} binaries" || true
       - name: Push
