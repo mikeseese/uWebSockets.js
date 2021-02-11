@@ -84,12 +84,6 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu') || startsWith(matrix.os, 'macos')
       - run: cp -Force ./build/Release/*.node ./binaries/
         if: startsWith(matrix.os, 'windows')
-      - name: Rebuild for Electron v11
-        run: npx electron-rebuild --version 11.2.3
-      - run: cp -f ./build/Release/*.node ./binaries/
-        if: startsWith(matrix.os, 'ubuntu') || startsWith(matrix.os, 'macos')
-      - run: cp -Force ./build/Release/*.node ./binaries/
-        if: startsWith(matrix.os, 'windows')
       - name: Configure Git
         run: |
           git config --global user.email "seesemichaelj@gmail.com"
