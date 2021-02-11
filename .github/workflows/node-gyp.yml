@@ -30,6 +30,8 @@ jobs:
       - name: Commit
         run: git commit -m "[GitHub Actions] Updated ${{ matrix.os }} NodeJS ${{ matrix.node }} binaries" || true
       - name: Push
-        run: |
-          git pull
-          git push "https://seesemichaelj:${{ secrets.SECRET }}@github.com/seesemichaelj/uWebSockets.js"
+        uses: nick-invision/retry@v2
+        with:
+            max_attempts: 20
+            retry_wait_seconds: 5
+            command: git pull && git push "https://seesemichaelj:${{ secrets.SECRET }}@github.com/seesemichaelj/uWebSockets.js"
