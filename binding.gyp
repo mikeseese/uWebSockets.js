@@ -1,11 +1,15 @@
 {
+  "variables": {
+    "target_node_module_version": "<!(node -p \"require('fs').readFileSync('<(nodedir)/include/node/node_version.h', { encoding: 'utf8' }).match(/#define NODE_MODULE_VERSION ([0-9]+)/)[1]\")",
+    "node_os": "<!(node -p \"'<(OS)' === 'win' ? 'win32' : '<(OS)' === 'mac' ? 'darwin' : 'linux'\")",
+    "is_electron": "<!(node -p \"'<(nodedir)'.includes('electron')\")"
+  },
   "targets": [
     {
-      "target_name": "uws_<(OS)_<(node_module_version)",
+      "target_name": "uws_<(node_os)_<(target_arch)_<(target_node_module_version)",
       "defines": [
         "UWS_WITH_PROXY",
-        "LIBUS_USE_LIBUV",
-        "LIBUS_USE_OPENSSL"
+        "LIBUS_USE_LIBUV"
       ],
       "include_dirs": [
         "uWebSockets/uSockets/src",
@@ -67,7 +71,23 @@
               "--std=c++17"
             ],
           }
-        ]
+        ],
+        [
+          "is_electron=='true'",
+          {
+            "defines": [
+              "LIBUS_NO_SSL"
+            ]
+          }
+        ],
+        [
+          "is_electron=='false'",
+          {
+            "defines": [
+              "LIBUS_NO_SSL"
+            ]
+          }
+        ],
       ]
     }
   ]
