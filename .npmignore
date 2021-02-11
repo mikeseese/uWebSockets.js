@@ -8,3 +8,4 @@ misc
 src/*.h
 src/*.cpp
 uWebSockets
+binding.gyp
