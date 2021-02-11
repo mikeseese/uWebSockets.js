@@ -32,6 +32,7 @@ jobs:
       - name: Push
         uses: nick-invision/retry@v2
         with:
+            timeout_minutes: 1
             max_attempts: 20
             retry_wait_seconds: 5
             command: git pull && git push "https://seesemichaelj:${{ secrets.SECRET }}@github.com/seesemichaelj/uWebSockets.js"
