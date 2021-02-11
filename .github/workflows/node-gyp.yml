@@ -25,6 +25,11 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu') || startsWith(matrix.os, 'macos')
       - run: cp -Force ./build/Release/*.node ./binaries/
         if: startsWith(matrix.os, 'windows')
+      - name: Build for ARM64
+        if: startsWith(matrix.os, 'ubuntu')
+        run: yarn build --arch arm64
+      - run: cp -f ./build/Release/*.node ./binaries/
+        if: startsWith(matrix.os, 'ubuntu')
       - name: Configure Git
         run: |
           git config --global user.email "seesemichaelj@gmail.com"
