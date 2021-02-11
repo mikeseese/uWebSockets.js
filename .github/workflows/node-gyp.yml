@@ -22,7 +22,7 @@ jobs:
       - run: yarn
       - name: Update binaries
         run: |
-          cp Release/obj.target/*.node .
+          cp ./build/Release/*.node .
           git status
           git pull origin binaries
           git rev-parse master > source_commit
