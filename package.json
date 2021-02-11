@@ -24,7 +24,7 @@
     "url": "https://github.com/seesemichaelj/uWebSockets.js/issues"
   },
   "homepage": "https://github.com/seesemichaelj/uWebSockets.js#readme",
-  "dependencies": {
+  "devDependencies": {
     "node-gyp": "^7.1.2"
   }
 }
