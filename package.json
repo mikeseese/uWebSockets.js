@@ -1,6 +1,6 @@
 {
-  "name": "uWebSockets.js",
-  "version": "18.15.0",
+  "name": "@seesemichaelj/uwebsockets.js",
+  "version": "18.15.1",
   "description": "Simple, secure, & standards compliant web server for the most demanding of applications.",
   "main": "src/uws.js",
   "types": "docs/index.d.ts",
