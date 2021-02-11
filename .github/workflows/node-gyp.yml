@@ -56,12 +56,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          ref: master
           submodules: "recursive"
       - name: Configure Git
         run: |
           git config --global user.email "seesemichaelj@gmail.com"
           git config --global user.name "Mike Seese"
           git config pull.rebase true
+      - run: git fetch origin
       - run: git merge --squash origin/temp_${{ github.sha }}
       - name: Commit
         run: git commit -m "[GitHub Actions] Updated all binaries" || true
