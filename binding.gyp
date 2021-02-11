@@ -1,6 +1,5 @@
 {
   "variables": {
-    "target_node_module_version": "<!(node -p \"require('fs').readFileSync(require('path').join(String.raw\`<(nodedir)\`, 'include', 'node', 'node_version.h'), { encoding: 'utf8' }).match(/#define NODE_MODULE_VERSION ([0-9]+)/)[1]\")",
     "node_os": "<!(node -p \"'<(OS)' === 'win' ? 'win32' : '<(OS)' === 'mac' ? 'darwin' : 'linux'\")",
     "is_electron": "<!(node -p \"'<(nodedir)'.includes('electron')\")"
   },
@@ -90,5 +89,23 @@
         ],
       ]
     }
+  ],
+  "conditions": [
+    [
+      "OS=='win'",
+      {
+        "variables": {
+    "target_node_module_version": "<!(node -p \"require('fs').readFileSync(require('path').join(String.raw`<(nodedir)`, 'include', 'node', 'node_version.h'), { encoding: 'utf8' }).match(/#define NODE_MODULE_VERSION ([0-9]+)/)[1]\")",
+        }
+      }
+    ],
+    [
+      "OS!='win'",
+      {
+        "variables": {
+    "target_node_module_version": "<!(node -p \"require('fs').readFileSync(require('path').join(String.raw\`<(nodedir)\`, 'include', 'node', 'node_version.h'), { encoding: 'utf8' }).match(/#define NODE_MODULE_VERSION ([0-9]+)/)[1]\")",
+        }
+      }
+    ]
   ]
 }
