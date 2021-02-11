@@ -20,8 +20,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: yarn
-      - run: mkdir -p ./binaries
-      - run: cp ./build/Release/*.node ./binaries
+      - run: cp -f ./build/Release/*.node ./binaries
       - name: Configure Git
         run: |
           git config --global user.email "seesemichaelj@gmail.com"
