@@ -48,3 +48,30 @@ jobs:
           retry_wait_seconds: 5
           on_retry_command: git pull
           command: git push "https://seesemichaelj:${{ secrets.SECRET }}@github.com/seesemichaelj/uWebSockets.js" temp_${{ github.sha }}
+
+  commit-to-master:
+    if: ${{ !startsWith(github.event.head_commit.message, '[Github Actions]') }} # Prevent recursive builds
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: "recursive"
+      - name: Configure Git
+        run: |
+          git config --global user.email "seesemichaelj@gmail.com"
+          git config --global user.name "Mike Seese"
+          git config pull.rebase true
+      - run: git merge --squash temp_${{ github.sha }}
+      - name: Commit
+        run: git commit -m "[GitHub Actions] Updated all binaries" || true
+      - name: Push
+        uses: nick-invision/retry@v2 # retry just in case a person is pushing simultaneously
+        with:
+          timeout_minutes: 1
+          max_attempts: 3
+          retry_wait_seconds: 5
+          on_retry_command: git pull
+          command: git push "https://seesemichaelj:${{ secrets.SECRET }}@github.com/seesemichaelj/uWebSockets.js"
+      - name: Delete Temporary Branch
+        run: git push "https://seesemichaelj:${{ secrets.SECRET }}@github.com/seesemichaelj/uWebSockets.js" --delete temp_${{ github.sha }}
