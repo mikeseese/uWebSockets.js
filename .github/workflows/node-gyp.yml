@@ -21,9 +21,9 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: yarn
-      - run: cp -f ./build/Release/*.node ./binaries
+      - run: cp -f ./build/Release/*.node ./binaries/
         if: startsWith(matrix.os, 'ubuntu') || startsWith(matrix.os, 'macos')
-      - run: cp -Force ./build/Release/*.node ./binaries
+      - run: cp -Force ./build/Release/*.node ./binaries/
         if: startsWith(matrix.os, 'windows')
       - name: Configure Git
         run: |
