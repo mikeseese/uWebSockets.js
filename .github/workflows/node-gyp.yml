@@ -52,7 +52,7 @@ jobs:
           max_attempts: 20
           retry_wait_seconds: 5
           on_retry_command: git pull
-          command: git push "https://seesemichaelj:${{ secrets.SECRET }}@github.com/seesemichaelj/uWebSockets.js" temp_${{ github.sha }}
+          command: git push origin temp_${{ github.sha }}
 
   build-electron:
     if: ${{ !startsWith(github.event.head_commit.message, '[Github Actions]') && !startsWith(github.event.head_commit.message, '[Skip CI]') }} # Prevent recursive builds
@@ -111,7 +111,7 @@ jobs:
           max_attempts: 20
           retry_wait_seconds: 5
           on_retry_command: git pull
-          command: git push "https://seesemichaelj:${{ secrets.SECRET }}@github.com/seesemichaelj/uWebSockets.js" temp_${{ github.sha }}
+          command: git push origin temp_${{ github.sha }}
 
   commit-to-master:
     if: ${{ !startsWith(github.event.head_commit.message, '[Github Actions]') && !startsWith(github.event.head_commit.message, '[Skip CI]') }} # Prevent recursive builds
@@ -138,6 +138,6 @@ jobs:
           max_attempts: 3
           retry_wait_seconds: 5
           on_retry_command: git pull
-          command: git push "https://seesemichaelj:${{ secrets.SECRET }}@github.com/seesemichaelj/uWebSockets.js"
+          command: git push origin
       - name: Delete Temporary Branch
-        run: git push "https://seesemichaelj:${{ secrets.SECRET }}@github.com/seesemichaelj/uWebSockets.js" --delete temp_${{ github.sha }}
+        run: git push origin --delete temp_${{ github.sha }}
